@@ -1,6 +1,10 @@
 const {test, expect, request} = require('@playwright/test');
+const { json } = require('stream/consumers');
 
 const requestPayload = {userEmail:"kyp1395@gmail.com",userPassword:"Test@1234"};
+const orderPayload = {orders:[{country:"Cuba",productOrderedId:"6262e990e26b7e1a10e89bfa"}]}
+let orderID;
+
 let token;
 
 test.beforeAll(async()=>{
@@ -13,7 +17,17 @@ test.beforeAll(async()=>{
     token = loginResponseJson.token;
     console.log(token);
 
-    
+    const orderResponse = await apiContext.post("https://rahulshettyacademy.com/api/ecom/order/create-order",{
+        data : orderPayload,
+        headers : {
+            'Authorization' : token,
+            'Content-Type' : 'application/json'
+        },
+    })
+
+    const orderResponseJson = await orderResponse.json();
+    console.log(orderResponseJson);
+    orderID = orderResponseJson.orders[0];
 
 });
 
@@ -22,7 +36,7 @@ test.beforeEach(()=>{
 });
 
 
-test('Place the order- login using API', async({page})=>
+test('Place the order- login using API, create order using API', async({page})=>
 { 
     //Inject token into the local storage of the browser
     page.addInitScript(value => {
@@ -46,7 +60,7 @@ test('Place the order- login using API', async({page})=>
     const countryDropdown = page.locator(".ta-results");
     const placeOrderButton = page.locator(".action__submit");
     const orderNumberLocator = page.locator(".em-spacer-1 .ng-star-inserted");
-    const orderHistoryPageLocator = page.locator("td [routerlink*='myorders']");
+    const orderHistoryPageLocator = page.locator("[routerlink*='myorders']");
     const previousOrders = page.locator(".table .ng-star-inserted");
     const orderRows = page.locator("tbody tr");
     const summarayOrderID = page.locator(".col-text");
@@ -63,72 +77,72 @@ test('Place the order- login using API', async({page})=>
     //await page.waitForLoadState("networkidle");
     
     //List all available product titles
-    await productTitle.first().waitFor();
-    const allTitles = await productTitle.allTextContents();
-    // console.log("Total number of available results are: " + allTitles.length);
-    console.log(allTitles);
+    // await productTitle.first().waitFor();
+    // const allTitles = await productTitle.allTextContents();
+    // // console.log("Total number of available results are: " + allTitles.length);
+    // console.log(allTitles);
 
     //Add to cart- iphone 13 pro
-    const count = await products.count();
-    for(let i=0; i<count; i++){
-        if(await products.nth(i).locator("b").textContent() === productName){
+    // const count = await products.count();
+    // for(let i=0; i<count; i++){
+    //     if(await products.nth(i).locator("b").textContent() === productName){
             
-            //add to cart
-            await products.nth(i).locator("text= Add To Cart").click();
-            break;
-        }
-    }
-    
-    //Verify if iphone 13 pro is added into the card list
-    await cartButton.click();
-    await page.locator(".cart li").first().waitFor();   //this will wait until first element of cart list gets visible
-    const bool = await page.locator("h3:has-text('iphone 13 pro')").isVisible();
-    expect(bool).toBeTruthy();
-
-    //Checkout
-    await checkoutButton.click();
-
-    //Shipping Information
-    await selectCountry.type("can", {delay: 100});
-    await countryDropdown.waitFor();
-    const optionsCount = await countryDropdown.locator("button").count();
-    for(let i = 0; i<optionsCount; i++){
-        const text = await countryDropdown.locator("button").nth(i).textContent();
-        if(text.trim() === "Canada"){
-            await countryDropdown.locator("button").nth(i).click();
-            break;
-        }
-    }
-    
-    //Verify username is same as user that is logged in
-    const shippingUserName = await page.locator(".user__name label");
-    await expect(shippingUserName).toHaveText(user_name);
-
-    //Personal information
-    await page.locator(".field input").nth(1).fill("123");
-    await page.locator(".field input").nth(2).fill("Rahul Shetty");
-    await page.locator(".field input").nth(3).fill("rahulshettyacademy");
-    await page.locator("button:has-text('Apply Coupon')").click();
-
-    await couponAppliedText.waitFor();
-    //const couponMessage = await couponAppliedText.textContent(); 
-    // if(couponMessage === "* Coupon Applied"){
-    //     console.log("Coupon Status: " + couponMessage);
-    //     couponBool = true;
-    // }else if(couponMessage === "* Invalid Coupon"){
-    //     console.log("Coupon Status: " + couponMessage);
-    //     couponBool = false;
+    //         //add to cart
+    //         await products.nth(i).locator("text= Add To Cart").click();
+    //         break;
+    //     }
     // }
-    await expect(couponAppliedText).toHaveText("* Coupon Applied");
+    
+    // //Verify if iphone 13 pro is added into the card list
+    // await cartButton.click();
+    // await page.locator(".cart li").first().waitFor();   //this will wait until first element of cart list gets visible
+    // const bool = await page.locator("h3:has-text('iphone 13 pro')").isVisible();
+    // expect(bool).toBeTruthy();
+
+    // //Checkout
+    // await checkoutButton.click();
+
+    // //Shipping Information
+    // await selectCountry.type("can", {delay: 100});
+    // await countryDropdown.waitFor();
+    // const optionsCount = await countryDropdown.locator("button").count();
+    // for(let i = 0; i<optionsCount; i++){
+    //     const text = await countryDropdown.locator("button").nth(i).textContent();
+    //     if(text.trim() === "Canada"){
+    //         await countryDropdown.locator("button").nth(i).click();
+    //         break;
+    //     }
+    // }
+    
+    // //Verify username is same as user that is logged in
+    // const shippingUserName = await page.locator(".user__name label");
+    // await expect(shippingUserName).toHaveText(user_name);
+
+    // //Personal information
+    // await page.locator(".field input").nth(1).fill("123");
+    // await page.locator(".field input").nth(2).fill("Rahul Shetty");
+    // await page.locator(".field input").nth(3).fill("rahulshettyacademy");
+    // await page.locator("button:has-text('Apply Coupon')").click();
+
+    // await couponAppliedText.waitFor();
+    // //const couponMessage = await couponAppliedText.textContent(); 
+    // // if(couponMessage === "* Coupon Applied"){
+    // //     console.log("Coupon Status: " + couponMessage);
+    // //     couponBool = true;
+    // // }else if(couponMessage === "* Invalid Coupon"){
+    // //     console.log("Coupon Status: " + couponMessage);
+    // //     couponBool = false;
+    // // }
+    // await expect(couponAppliedText).toHaveText("* Coupon Applied");
 
 
-    //Place the order
-    await placeOrderButton.click();
-    await page.locator(".hero-primary").waitFor();
-    await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
-    const orderNumber = await orderNumberLocator.textContent();
-    const orderID = orderNumber.replaceAll('|','').trim();
-    console.log("Order Number is:" + orderID);
+    // //Place the order
+    // await placeOrderButton.click();
+    // await page.locator(".hero-primary").waitFor();
+    // await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
+    // const orderNumber = await orderNumberLocator.textContent();
+    // orderID = orderNumber.replaceAll('|','').trim();
+    // console.log("Order Number is:" + orderID);
     
     //Order History page
     await orderHistoryPageLocator.click();
@@ -147,7 +161,7 @@ test('Place the order- login using API', async({page})=>
     //Validation of summaryOrderID and orderID
     await summarayOrderID.waitFor();
     expect(summarayOrderID).toHaveText(orderID);
-    //await page.pause();
+    await page.pause();
 
 });
 
