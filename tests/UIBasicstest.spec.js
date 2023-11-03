@@ -125,7 +125,7 @@ test('Child window handling', async({browser})=>
 
 });
 
-test.only('Playwrite Special Locators', async({page})=>
+test('Playwrite Special Locators', async({page})=>
 {
     await page.goto("https://rahulshettyacademy.com/angularpractice/");
     await page.getByLabel("Check me out if you Love IceCreams!").check();
