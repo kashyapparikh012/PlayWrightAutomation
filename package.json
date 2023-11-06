@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "npx playwright test tests/WebAPIPart1.spec.js --headed"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
