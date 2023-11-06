@@ -28,7 +28,7 @@ test.beforeAll(async({browser})=>{
 test('Test case 1: Practice on UI automation', async()=>
 {
     const page = await webContext.newPage();
-    await page.goto("https://rahulshettyacademy.com/client/") 
+    await page.goto("https://rahulshettyacademy.com/client/");
 
     const products = page.locator(".card-body");
     const productTitle = page.locator(".card-body b");
