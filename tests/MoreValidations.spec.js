@@ -39,7 +39,7 @@ test('Taking Screenshot', async({page})=>
        
 });
 
-test.only('Visual Comparison of screenshots', async({page})=>
+test('Visual Comparison of screenshots', async({page})=>
 {
     await page.goto("https://www.google.com/");
     expect(await page.screenshot()).toMatchSnapshot('landing.png');
