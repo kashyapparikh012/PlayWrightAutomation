@@ -29,7 +29,7 @@ test('Page Playwright test', async ({page})=>
 
 });
 
-test.only('Browser Context-Validating Error Login', async ({page})=>
+test('Browser Context-Validating Error Login', async ({page})=>
 {
 
     const userName = page.locator("input#username");
