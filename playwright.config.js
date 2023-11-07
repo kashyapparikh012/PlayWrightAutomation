@@ -36,8 +36,8 @@ module.exports = defineConfig({
     
     browserName : 'chromium',
     headless : true,
-    screenshot : 'only-on-failure',
-    trace: 'retain-on-failure', //on/off
+    screenshot : 'on',
+    trace: 'on', //on/off//retain-on-failure
   },
 
   /* Configure projects for major browsers */

@@ -37,6 +37,10 @@ test('Browser Context-Validating Error Login', async ({page})=>
     const signInBtn = page.locator("[id='signInBtn']");
     const cardTitles = page.locator(".card-body a");
 
+    page.route('**/*.{jpg,png,jpeg}', route=>route.abort());    //Blocking jpg,png,jpeg to appear on webpage
+    page.on('request', request=>console.log(request.url()));    //displaying all request urls
+    page.on('response', response=>console.log(response.url(), response.status()));  //displaying all response urls with status code
+    
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     console.log(await page.title());
     

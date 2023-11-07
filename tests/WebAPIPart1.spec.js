@@ -2,7 +2,7 @@ const {test, expect, request} = require('@playwright/test');
 const {APIUtils} = require('./utils/APIUtils');
 
 const loginPayload = {userEmail:"kyp1395@gmail.com",userPassword:"Test@1234"};
-const orderPayload = {orders:[{country:"Cuba",productOrderedId:"6262e990e26b7e1a10e89bfa"}]}
+const orderPayload = {orders:[{country:"Cuba",productOrderedId:"6262e990e26b7e1a10e89bfa"}]};
 
 let response;
 
@@ -28,8 +28,8 @@ test('Place the order- login using API, create order using API', async({page})=>
         window.localStorage.setItem('token', value)
     }, response.token);
 
-    await page.goto("https://rahulshettyacademy.com/client/")
-    
+    await page.goto("https://rahulshettyacademy.com/client/");
+       
     const orderHistoryPageLocator = page.locator("[routerlink*='myorders']");
     const orderRows = page.locator("tbody tr");
     const summarayOrderID = page.locator(".col-text");
