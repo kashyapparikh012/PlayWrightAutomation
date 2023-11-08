@@ -10,7 +10,7 @@ class OrderHistoryPage {
         const orderCount = await this.orderRows.count();
         for (let i = 0; i < orderCount; i++) {
             const rowOrderID = await this.orderRows.nth(i).locator("th").textContent();
-            console.log("Row order ID is: " + rowOrderID);
+            //console.log("Row order ID is: " + rowOrderID);
             if (rowOrderID === orderID) {
                 await this.orderRows.nth(i).locator(".btn-primary").click();
                 break;

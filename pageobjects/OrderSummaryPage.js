@@ -7,7 +7,7 @@ class OrderSummaryPage {
 
     async verifySummaryOrderID(orderID) {
         await this.summarayOrderID.waitFor();
-        expect(this.summarayOrderID).toHaveText(orderID);
+        await expect(this.summarayOrderID).toHaveText(orderID);
     }
 
 }

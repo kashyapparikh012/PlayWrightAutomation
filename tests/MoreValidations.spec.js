@@ -1,5 +1,7 @@
 const {test, expect} = require('@playwright/test');
 
+//test.describe.configure({mode:'parallel'});   //2 tests will run in parallel with 2 workers
+//test.describe.configure({mode:'serial'}); //If test1 is failed, then test2 is skipped
 test('Popup validations', async({page})=>
 {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");

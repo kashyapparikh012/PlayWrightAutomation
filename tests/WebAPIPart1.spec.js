@@ -20,7 +20,7 @@ test.beforeEach(()=>{
 });
 
 
-test('Place the order- login using API, create order using API', async({page})=>
+test('@API Place the order- login using API, create order using API', async({page})=>
 { 
     
     //Inject token into the local storage of the browser
