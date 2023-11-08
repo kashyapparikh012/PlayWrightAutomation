@@ -1,5 +1,5 @@
 const {test, expect, request} = require('@playwright/test');
-const {APIUtils} = require('./utils/APIUtils');
+const {APIUtils} = require('../utils/APIUtils');
 
 const loginPayload = {userEmail:"kyp1395@gmail.com",userPassword:"Test@1234"};
 const orderPayload = {orders:[{country:"Cuba",productOrderedId:"6262e990e26b7e1a10e89bfa"}]};
@@ -20,7 +20,7 @@ test.beforeEach(()=>{
 });
 
 
-test('Place the order- login using API, create order using API', async({page})=>
+test('@API Place the order- login using API, create order using API', async({page})=>
 { 
     
     //Inject token into the local storage of the browser

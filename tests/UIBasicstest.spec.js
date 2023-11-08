@@ -1,5 +1,4 @@
 const {test, expect} = require('@playwright/test');
-const { link } = require('fs');
 
 
 test('Browser Context Playwright test', async ({browser})=>

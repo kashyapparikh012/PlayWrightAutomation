@@ -25,7 +25,7 @@ test.beforeAll(async({browser})=>{
 
 });
 
-test('Test case 1: Practice on UI automation', async()=>
+test('@API Test case 1: Practice on UI automation', async()=>
 {
     const page = await webContext.newPage();
     await page.goto("https://rahulshettyacademy.com/client/");
@@ -130,7 +130,7 @@ test('Test case 1: Practice on UI automation', async()=>
 
 });
 
-test('Test case 2: Login and print all available product titles', async()=>
+test('@API Test case 2: Login and print all available product titles', async()=>
 {
     const page = await webContext.newPage();
     await page.goto("https://rahulshettyacademy.com/client/") 

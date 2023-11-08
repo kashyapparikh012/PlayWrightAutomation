@@ -13,8 +13,9 @@ const { defineConfig, devices } = require('@playwright/test');
 module.exports = defineConfig({
   testDir: './tests',
   /*Maximum time one test can run for. */
+  retries: 1,
+  workers: 3,
   timeout: 30 * 1000,
-  retries:1,
   expect: {
     timeout: 5000
   },
@@ -25,7 +26,7 @@ module.exports = defineConfig({
   /* Retry on CI only */
   //retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  //workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -36,34 +37,35 @@ module.exports = defineConfig({
       name: 'chrome',
       use: {
         browserName: 'chromium',
-        headless: true,
+        headless: false,
         screenshot: 'on', //on/off/retain-on-failure
         trace: 'on', //on/off//retain-on-failure
         video: 'retain-on-failure',
         ignoreHTTPSErrors: true,
         permissions: ['geolocation'],
+        //viewport: {width:720,height:720},
       },
     },
 
-    // {
-    //   name: 'firefox',
-    //   use: {
-    //     browserName: 'firefox',
-    //     headless: false,
-    //     screenshot: 'off',
-    //     trace: 'off', //on/off//retain-on-failure
-    //   },
-    // },
+    {
+      name: 'firefox',
+      use: {
+        browserName: 'firefox',
+        headless: false,
+        screenshot: 'off',
+        trace: 'off', //on/off//retain-on-failure
+      },
+    },
 
-    // {
-    //   name: 'safari',
-    //   use: {
-    //     browserName: 'webkit',
-    //     headless: false,
-    //     screenshot: 'off',
-    //     trace: 'off', //on/off//retain-on-failure
-    //   },
-    // },
+    {
+      name: 'safari',
+      use: {
+        browserName: 'webkit',
+        headless: false,
+        screenshot: 'off',
+        trace: 'off', //on/off//retain-on-failure
+      },
+    },
 
     /* Test against mobile viewports. */
     // {
