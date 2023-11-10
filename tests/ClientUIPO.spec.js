@@ -17,7 +17,7 @@ for (const data of dataset) {
         const orderHistoryPage = poManager.getOrderHistoryPage();
         const orderSummaryPage = poManager.getOrderSummaryPage();
 
-        loginPage.goTO();
+        await loginPage.goTO();
         //Login code
         await loginPage.validLogin(data.username, data.userpassword);
 
